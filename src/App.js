@@ -1,26 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Switch, Link, Route } from "react-router-dom";
+import SignIn from "../src/views/SignIn";
+import HomePage from "../src/views/HomePage";
 
-function App() {
+const App = props => {
+  console.log(props);
+  const _goAbout = () => {
+    const { history } = props;
+    history.push("/about");
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <HomePage />
+    </React.Fragment>
   );
-}
+};
 
 export default App;
