@@ -1,20 +1,17 @@
 import SignIn from "../views/SignIn";
+import Users from '../components/manager/Users'
+import Challenges from '../components/manager/Challenges'
 
 const routes = [
   {
-    path: "/signin",
+    path: "/Challenges",
     exact: false,
-    main: () => SignIn
+    main: () => Challenges
   },
   {
-    path: "/users",
+    path: "/Users",
     exact: false,
-    main: () => SignIn
-  },
-  {
-    path: "/signin",
-    exact: false,
-    main: () => SignIn
+    main: () => Users
   },
   {
     path: "/",
@@ -23,4 +20,4 @@ const routes = [
   }
 ];
 
-export const routes
+export default routes

@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken')
-const config = require('../../constants/Config');
+const jwt = require("jsonwebtoken");
+const config = require("constants/Config");
 const getCookie = () => {
   if (document.cookie !== null) {
     const name = "token=";
@@ -7,15 +7,12 @@ const getCookie = () => {
     for (let i = 0; i < ca.length; i++) {
       const c = ca[i];
       if (c.indexOf(name) === 0) {
-        const decode = jwt.decode(c.substring(6), config.TOKEN_SECRET)
-        if (decode.type === "access")
-          return c.substring(6);
-        else return null
-      }
-      else
-        continue;
+        const decode = jwt.decode(c.substring(6), config.TOKEN_SECRET);
+        if (decode.type === "access") return c.substring(6);
+        else return null;
+      } else continue;
     }
-    return null
+    return null;
   }
 };
 export default getCookie;

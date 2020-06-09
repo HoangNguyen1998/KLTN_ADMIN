@@ -1,1 +1,0 @@
-export const GET_USERS_DETAILS = "GET_USERS_DETAILS";

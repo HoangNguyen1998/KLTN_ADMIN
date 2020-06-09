@@ -1,5 +1,5 @@
-import * as Config from "../constants/Config";
-import axiosInstance from "./axiosInstance";
+import * as Config from "constants/Config";
+import axiosInstance from "./AxiosInstance";
 
 export default function callApi(endpoint, method, body) {
   const test = new axiosInstance({
