@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { Provider } from "react-redux";
 
+import 'antd/dist/antd.css';
 import theme from "../src/styles";
 import configStore from "../src/helpers/ReduxConfig";
 

@@ -28,6 +28,7 @@ const categories = [
         children: [
             { id: "Users", icon: <PeopleIcon />, active: true },
             { id: "Challenges", icon: <DnsRoundedIcon /> },
+            { id: "Topic", icon: <DnsRoundedIcon /> },
             { id: "Storage", icon: <PermMediaOutlinedIcon /> },
             { id: "Hosting", icon: <PublicIcon /> },
             { id: "Functions", icon: <SettingsEthernetIcon /> },
@@ -94,7 +95,7 @@ const NavigatorCustom = (props) => {
                                 className={clsx(
                                     classes.item,
                                     category === childId &&
-                                        classes.itemActiveItem
+                                    classes.itemActiveItem
                                 )}
                             >
                                 <ListItemIcon className={classes.itemIcon}>
