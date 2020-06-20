@@ -1,6 +1,10 @@
 import React from "react";
+import CheckAuthen from "helpers/GetToken";
 import Users from "pages/Screen/Users";
-import Topic from "pages/Screen/Topic"
+import Signin from "pages/Screen/SignIn";
+import Topic from "pages/Screen/Topic";
+import Alphabet from "pages/Screen/Alphabet";
+import ReportUser from 'pages/Screen/ReportUser'
 const routes = [
     // {
     //     path: "/draw",
@@ -8,14 +12,24 @@ const routes = [
     //     main: () => (CheckAuthen() ? <Draw /> : <SignIn />),
     // },
     {
-        path: "/Users",
+        path: "/Alphabet",
         exact: false,
-        main: () => <Users />,
+        main: () => (CheckAuthen() ? <Alphabet /> : <Signin />),
     },
     {
-        path: "/Topic",
+        path: "/Users",
         exact: false,
-        main: () => <Topic />
+        main: () => (CheckAuthen() ? <Users /> : <Signin />),
+    },  
+    {
+        path: "/Topics",
+        exact: false,
+        main: () => (CheckAuthen() ? <Topic /> : <Signin />),
+    },
+    {
+        path: "/Reports",
+        exact: false,
+        main: () => (CheckAuthen() ? <ReportUser /> : <Signin />),
     },
 ];
 

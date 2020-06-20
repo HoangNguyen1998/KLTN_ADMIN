@@ -4,7 +4,7 @@ import * as LoadingActions from "actions/GlobalLoading";
 import * as GetMeActions from "actions/GetMe";
 import * as SignInActions from "actions/SignIn";
 import * as SocketActions from 'actions/Socket'
-import CallApi from "helpers/ApiCaller";
+import callApi from 'helpers/ApiCaller';
 
 function* SignInFlow(user) {
     const {history, enqueueSnackbar, t} = user.payload;
@@ -12,7 +12,7 @@ function* SignInFlow(user) {
         yield put(LoadingActions.ShowLoading());
         const {username, password, remember} = user.payload.data;
         const userdetail = {username: username, password: password};
-        const res = yield call(CallApi, "users/login", "POST", userdetail);
+        const res = yield call(callApi, "users/login", "POST", userdetail);
         const {data} = res;
         console.log(data)
         yield put(GetMeActions.Get_Me_Success(data.result));
@@ -32,7 +32,7 @@ function* SignInFlow(user) {
     }
 }
 function* SignInWatcher() {
-    yield takeLatest(SignInConstants.SIGNIN_REQUEST, SignInFlow);
+    // yield takeLatest(SignInConstants.SIGNIN_REQUEST, SignInFlow);
 }
 
 export default SignInWatcher;

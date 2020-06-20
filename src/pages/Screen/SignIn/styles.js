@@ -1,10 +1,9 @@
-import loginBackground from "assets/loginbackground.jpg";
+
 const stylesSignIn = theme => ({
   root: {
     height: "100vh"
   },
   image: {
-    backgroundImage: `url(${loginBackground})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center"

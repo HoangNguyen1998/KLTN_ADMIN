@@ -7,16 +7,16 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import "./styles.scss";
 
-const BlankPage = (props) => {
+const ReportUser = (props) => {
     // -----    DEFINE  -----
-    const dispatch = useDispatch ()
-    const {enqueueSnackbar}=props
+    const dispatch = useDispatch();
+    const { enqueueSnackbar } = props;
     // -----    STATE   -----
-    const [isLoading, setIsLoading] =useState(true)
+    const [isLoading, setIsLoading] = useState(true);
     // -----    USEEFFECT   -----
     // -----    FUNC    -----
     // -----    RENDER  -----
     return <div>HELLO</div>;
 };
 
-export default withRouter(withSnackbar(BlankPage));
+export default withRouter(withSnackbar(ReportUser));

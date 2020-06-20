@@ -10,6 +10,7 @@ import FriendsReducer from "./Friends";
 import SocketReducer from "./Socket";
 import VideoReducer from './Video'
 import AlphabetReducer from "./Alphabet";
+import UserReducer from './Users'
 
 const rootReducer = combineReducers({
     SignIn: SignInReducer,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
     Socket: SocketReducer,
     Alphabet: AlphabetReducer,
     Video: VideoReducer,
+    Users: UserReducer
 });
 
 export default rootReducer;

@@ -17,7 +17,13 @@ import SettingsEthernetIcon from "@material-ui/icons/SettingsEthernet";
 import SettingsInputComponentIcon from "@material-ui/icons/SettingsInputComponent";
 import TimerIcon from "@material-ui/icons/Timer";
 import SettingsIcon from "@material-ui/icons/Settings";
+import TranslateIcon from "@material-ui/icons/Translate";
 import PhonelinkSetupIcon from "@material-ui/icons/PhonelinkSetup";
+import VideoLibraryIcon from "@material-ui/icons/VideoLibrary";
+import GestureIcon from "@material-ui/icons/Gesture";
+import MenuBookIcon from "@material-ui/icons/MenuBook";
+import ReportIcon from "@material-ui/icons/Report";
+import LandscapeIcon from "@material-ui/icons/Landscape";
 import { withStyles } from "@material-ui/core/styles";
 
 import styles from "./styles";
@@ -27,12 +33,12 @@ const categories = [
         id: "Develop",
         children: [
             { id: "Users", icon: <PeopleIcon />, active: true },
-            { id: "Challenges", icon: <DnsRoundedIcon /> },
-            { id: "Topic", icon: <DnsRoundedIcon /> },
-            { id: "Storage", icon: <PermMediaOutlinedIcon /> },
-            { id: "Hosting", icon: <PublicIcon /> },
-            { id: "Functions", icon: <SettingsEthernetIcon /> },
-            { id: "ML Kit", icon: <SettingsInputComponentIcon /> },
+            { id: "Challenges", icon: <LandscapeIcon /> },
+            { id: "Topics", icon: <MenuBookIcon /> },
+            { id: "Alphabet", icon: <TranslateIcon /> },
+            { id: "Video", icon: <VideoLibraryIcon /> },
+            { id: "Reports", icon: <ReportIcon /> },
+            { id: "Draw", icon: <GestureIcon /> },
         ],
     },
 ];
@@ -62,7 +68,7 @@ const NavigatorCustom = (props) => {
     };
 
     return (
-        <Drawer variant="permanent" {...other}>
+        <Drawer style={{ zIndex: 0 }} variant="permanent" {...other}>
             <List disablePadding>
                 <ListItem
                     className={clsx(
@@ -95,7 +101,7 @@ const NavigatorCustom = (props) => {
                                 className={clsx(
                                     classes.item,
                                     category === childId &&
-                                    classes.itemActiveItem
+                                        classes.itemActiveItem
                                 )}
                             >
                                 <ListItemIcon className={classes.itemIcon}>
