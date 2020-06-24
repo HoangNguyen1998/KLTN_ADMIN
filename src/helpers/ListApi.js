@@ -24,3 +24,12 @@ export const _puttData = async (url, data) => {
         return error.response.data;
     }
 };
+
+export const _deleteData = async (url) => {
+    try {
+        const res = await callApi(url, "DELETE", null);
+        return res.data;
+    } catch (err) {
+        return err.response.data;
+    }
+};

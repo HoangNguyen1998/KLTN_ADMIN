@@ -60,13 +60,24 @@ const Alphabet = (props) => {
     // -----    USEEFFECT   -----
     useEffect(() => {
         // _getAllAlphabet();
-        dispatch(alphabetActions.Get_All_Alphabet_Request(setIsLoading));
+        if (alphabetRedux.length=== 0) {
+            dispatch(alphabetActions.Get_All_Alphabet_Request(setIsLoading));
+        }
+        else {
+            setIsLoading(false)
+        }
     }, []);
     // -----    FUNC    -----
     const _updateAlphabet = (id) => {
         console.log(modalRef);
         if (modalRef.current !== null) {
-            modalRef.current._openModal(<UpdateAlpabet _closeModal={modalRef.current._closeModal} id={id} />, 1000);
+            modalRef.current._openModal(
+                <UpdateAlpabet
+                    _closeModal={modalRef.current._closeModal}
+                    id={id}
+                />,
+                1000
+            );
         }
     };
     const _renderAlphabet = (data) => {
@@ -80,7 +91,11 @@ const Alphabet = (props) => {
     };
     // -----    RENDER  -----
     if (isLoading) {
-        return <div style={{textAlign: "center"}}><CircularProgress/></div>;
+        return (
+            <div style={{ textAlign: "center" }}>
+                <CircularProgress />
+            </div>
+        );
     }
     return (
         <div>

@@ -8,13 +8,12 @@ import { Table, Input, Button, Space } from "antd";
 import Highlighter from "react-highlight-words";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import "./styles.scss";
+import "../styles.scss";
 
-const BlankPage = (props) => {
+const ChallengesDetail = (props) => {
     // -----    DEFINE  -----
-    const modalRef = useRef(null)
     const dispatch = useDispatch ()
-    const {enqueueSnackbar}=props
+    const {item, _closeModal}=props
 
     // -----    STATE   -----
     const [isLoading, setIsLoading] =useState(true)
@@ -29,4 +28,4 @@ const BlankPage = (props) => {
     return <div>HELLO</div>;
 };
 
-export default withRouter(withSnackbar(BlankPage));
+export default withRouter(withSnackbar(ChallengesDetail));

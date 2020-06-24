@@ -4,21 +4,19 @@ import findIndex from "lodash/findIndex";
 
 const reducer = (
     state = {
-        challenges: {},
+        challenges: [],
         challengeDetail: {},
         listComment: [],
     },
     action
 ) => {
     switch (action.type) {
-        case ChallengesConstants.GET_ALL_CHALLENGES_REQUEST: {
-            return {...state};
-        }
         case ChallengesConstants.GET_ALL_CHALLENGES_SUCCESS: {
             const {payload} = action;
+            console.log(payload)
             return {
                 ...state,
-                challenges: payload.result,
+                challenges: payload,
             };
         }
         case ChallengesConstants.GET_ALL_CHALLENGES_ERROR: {

@@ -1,46 +1,62 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { withRouter } from "react-router-dom";
-import { withSnackbar } from "notistack";
 import { Table, Input, Button, Space } from "antd";
 import Highlighter from "react-highlight-words";
+import { withSnackbar } from "notistack";
+import { withRouter } from "react-router-dom";
+import moment from "moment";
 import { SearchOutlined } from "@ant-design/icons";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import moment from "moment";
 
-import MyModal from "pages/Components/MyModal";
 import "./styles.scss";
-import * as topicsActions from "actions/Topics";
-import CreateTopicModal from "./Components/CreateTopic";
-const Topic = (props) => {
+import * as challengesActions from "actions/Challenges";
+import MyModal from "pages/Components/MyModal";
+import ChallengesDetail from "./Components/ChallengesDetail";
+import CreateChallenges from "./Components/CreateChallenges";
+
+const Challenges = (props) => {
     // -----    DEFINE  -----
-    const topicsRedux = useSelector((state) => state.Topics.topics);
     const modalRef = useRef(null);
     const dispatch = useDispatch();
     const { enqueueSnackbar } = props;
+    const challengesRedux = useSelector((state) => state.Challenges.challenges);
 
     // -----    STATE   -----
     const [isLoading, setIsLoading] = useState(true);
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
-
     // -----    USEEFFECT   -----
     useEffect(() => {
-        if (topicsRedux.length === 0) {
+        if (challengesRedux.length === 0) {
             dispatch(
-                topicsActions.Get_Topics_Request(setIsLoading, enqueueSnackbar)
+                challengesActions.Get_All_Challenges_Request(
+                    setIsLoading,
+                    enqueueSnackbar
+                )
             );
         } else {
             setIsLoading(false);
         }
     }, []);
+
     // -----    FUNC    -----
-    const _showModalCreate = () => {
-        modalRef.current._openModal(<CreateTopicModal />, 1000);
+    const _showModalDetail = (item) => {
+        console.log("Hello");
+        modalRef.current._openModal(
+            <ChallengesDetail
+                item={item}
+                _closeModal={modalRef.current._closeModal}
+            />,
+            1000
+        );
     };
-    const _showModalDetail = () => {
-        console.log("hello");
+    const _showModalCreate = () => {
+        console.log("Hello");
+        modalRef.current._openModal(
+            <CreateChallenges _closeModal={modalRef.current._closeModal} />,
+            1000
+        );
     };
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -127,22 +143,22 @@ const Topic = (props) => {
     });
     const columns = [
         {
-            title: "Id",
-            dataIndex: "_id",
-            key: "_id",
-            width: "20%",
+            title: "Câu hỏi",
+            dataIndex: "question",
+            key: "question",
+            width: "30%",
+            ...getColumnSearchProps("question"),
         },
         {
-            title: "Chủ đề",
-            dataIndex: "title",
-            key: "title",
+            title: "Lựa chọn 1",
+            dataIndex: "choice_1",
+            key: "choice_1",
             align: "center",
-            ...getColumnSearchProps("title"),
         },
         {
-            title: "Số thứ tự",
-            dataIndex: "number",
-            key: "number",
+            title: "Lựa chọn 2",
+            dataIndex: "choice_2",
+            key: "choice_2",
             align: "center",
         },
         {
@@ -163,10 +179,10 @@ const Topic = (props) => {
             render: (item) => (
                 <Space size="middle">
                     <a
-                        onClick={() => _showModalDetail(item._id, item.status)}
+                        onClick={() => _showModalDetail(item)}
                         style={{ color: "green" }}
                     >
-                        Chinh sua khoa hoc
+                        Chỉnh sửa thử thách
                     </a>
                 </Space>
             ),
@@ -188,16 +204,16 @@ const Topic = (props) => {
                         _showModalCreate();
                     }}
                 >
-                    Tạo chủ đề học mới
+                    Tao thử thách mới
                 </Button>
             </div>
             <Table
+                dataSource={challengesRedux ? challengesRedux : ""}
                 columns={columns}
-                dataSource={topicsRedux ? topicsRedux : ""}
             />
             <MyModal ref={modalRef} />
         </div>
     );
 };
 
-export default withRouter(withSnackbar(Topic));
+export default withRouter(withSnackbar(Challenges));

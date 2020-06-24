@@ -1,10 +1,16 @@
 import * as ChallengesConstants from "constants/Challenges";
+import * as　listApi from 'helpers/ListApi'
+import * as noti from "helpers/Notistack";
 
-export const Get_All_Challenges_Request = (IsWaiting) => {
-    return {
-        type: ChallengesConstants.GET_ALL_CHALLENGES_REQUEST,
-        payload: IsWaiting,
-    };
+export const Get_All_Challenges_Request = (setIsLoading, enqueueSnackbar) => async (dispatch)=> {
+    const res = await listApi._getData("challenges");
+    if (res.code === 200) {
+        noti.Noti_Success(enqueueSnackbar, "Tai thanh cong");
+        dispatch(Get_All_Challenges_Success(res.result));
+    } else {
+        noti.Noti_Error(enqueueSnackbar, "Co loi, xin vui long tai lai");
+    }
+    setIsLoading(false)
 };
 
 export const Get_All_Challenges_Error = (errors) => {

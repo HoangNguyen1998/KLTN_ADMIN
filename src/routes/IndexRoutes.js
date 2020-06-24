@@ -4,13 +4,14 @@ import Users from "pages/Screen/Users";
 import Signin from "pages/Screen/SignIn";
 import Topic from "pages/Screen/Topic";
 import Alphabet from "pages/Screen/Alphabet";
-import ReportUser from 'pages/Screen/ReportUser'
+import ReportUser from "pages/Screen/ReportUser";
+import Challenges from "pages/Screen/Challenges";
 const routes = [
-    // {
-    //     path: "/draw",
-    //     exact: false,
-    //     main: () => (CheckAuthen() ? <Draw /> : <SignIn />),
-    // },
+    {
+        path: "/Challenges",
+        exact: false,
+        main: () => (CheckAuthen() ? <Challenges /> : <Signin />),
+    },
     {
         path: "/Alphabet",
         exact: false,
@@ -20,7 +21,7 @@ const routes = [
         path: "/Users",
         exact: false,
         main: () => (CheckAuthen() ? <Users /> : <Signin />),
-    },  
+    },
     {
         path: "/Topics",
         exact: false,
