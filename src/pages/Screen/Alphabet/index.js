@@ -60,11 +60,10 @@ const Alphabet = (props) => {
     // -----    USEEFFECT   -----
     useEffect(() => {
         // _getAllAlphabet();
-        if (alphabetRedux.length=== 0) {
+        if (alphabetRedux.length === 0) {
             dispatch(alphabetActions.Get_All_Alphabet_Request(setIsLoading));
-        }
-        else {
-            setIsLoading(false)
+        } else {
+            setIsLoading(false);
         }
     }, []);
     // -----    FUNC    -----
@@ -99,6 +98,15 @@ const Alphabet = (props) => {
     }
     return (
         <div>
+            <div>
+                <Button
+                // onClick={() => {
+                //     _showModalCreate();
+                // }}
+                >
+                    Tạo chữ cái mới
+                </Button>
+            </div>
             <Table
                 columns={columns}
                 dataSource={alphabetRedux ? alphabetRedux : ""}

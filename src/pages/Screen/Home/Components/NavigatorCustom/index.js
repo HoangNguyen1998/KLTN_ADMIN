@@ -38,7 +38,6 @@ const categories = [
             { id: "Alphabet", icon: <TranslateIcon /> },
             { id: "Video", icon: <VideoLibraryIcon /> },
             { id: "Reports", icon: <ReportIcon /> },
-            { id: "Draw", icon: <GestureIcon /> },
         ],
     },
 ];
@@ -79,18 +78,7 @@ const NavigatorCustom = (props) => {
                 >
                     Admin
                 </ListItem>
-                <ListItem className={clsx(classes.item, classes.itemCategory)}>
-                    <ListItemIcon className={classes.itemIcon}>
-                        <HomeIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                        classes={{
-                            primary: classes.itemPrimary,
-                        }}
-                    >
-                        Project Overview
-                    </ListItemText>
-                </ListItem>
+
                 {categories.map(({ id, children }) => (
                     <React.Fragment key={id}>
                         {children.map(({ id: childId, icon, active }) => (

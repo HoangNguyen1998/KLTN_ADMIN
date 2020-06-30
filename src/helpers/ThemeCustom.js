@@ -52,15 +52,24 @@ theme = {
                 },
             },
         },
-        MuiFormLabel: {
-            root: {
-                fontSize: "2rem !important",
-            },
-        },
+        // MuiFormLabel: {
+        //     root: {
+        //         fontSize: "2rem !important",
+        //     },
+        // },
+        // MuiInputLabel: {
+        //     root: {
+        //         fontSize: "2rem !important"
+        //     }
+        // },
         MuiInputBase: {
             input: {
-                fontSize: "1.6rem",
+                fontSize: "1.6rem !important",
             },
+            root: {
+                fontSize: "1.6rem !important",
+
+            }
         },
         MuiTabs: {
             root: {

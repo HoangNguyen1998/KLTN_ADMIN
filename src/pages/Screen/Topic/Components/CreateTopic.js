@@ -20,16 +20,26 @@ import {
 import { Delete as DeleteIcon } from "@material-ui/icons";
 
 import * as topicsActions from "actions/Topics";
-
+import * as listApi from "helpers/ListApi";
 const CreateTopic = (props) => {
-    const { history, enqueueSnackbar } = props;
+    const { history, enqueueSnackbar, setIsLoading } = props;
     const { i18n, t } = useTranslation("translation");
     const circularRedux = useSelector((state) => state.Loading.showCircular);
     const [array, setArray] = useState({
         title: "",
-        content: [
-            { text: "", mean: "" },
-            { text: "", mean: "" },
+        voca: [
+            {
+                text: "",
+                kanji_text: "",
+                kanji_meaning: "",
+                vocabulary_meaning: "",
+            },
+            {
+                text: "",
+                kanji_text: "",
+                kanji_meaning: "",
+                vocabulary_meaning: "",
+            },
         ],
     });
     const AddCourseValue = useSelector((state) => {
@@ -37,35 +47,46 @@ const CreateTopic = (props) => {
     });
     const dispatch = useDispatch();
     const onAddNewCard = () => {
-        const item = { text: "", mean: "" };
-        const data = [...array.content];
+        const item = {
+            text: "",
+            kanji_text: "",
+            kanji_meaning: "",
+            vocabulary_meaning: "",
+        };
+        const data = [...array.voca];
         data.push(item);
-        setArray({ ...array, content: data });
+        setArray({ ...array, voca: data });
     };
     const handleChange = (event) => {
         var value = event.target.value;
         setArray({ ...array, title: value });
     };
     const onDeleteCard = (index) => {
-        const data = [...array.content];
+        const data = [...array.voca];
         data.splice(index, 1);
-        setArray({ ...array, content: data });
+        setArray({ ...array, voca: data });
     };
     const onChange = (event, index) => {
         var target = event.target;
         var name = target.name;
         var value = target.value;
 
-        const data = [...array.content];
+        const data = [...array.voca];
         if (name === "text") {
             data[index].text = value;
         }
-        if (name === "mean") {
-            data[index].mean = value;
+        if (name === "vocabulary_meaning") {
+            data[index].vocabulary_meaning = value;
         }
-        setArray({ ...array, content: data });
+        if (name === "kanji_meaning") {
+            data[index].kanji_meaning = value;
+        }
+        if (name === "kanji_text") {
+            data[index].kanji_text = value;
+        }
+        setArray({ ...array, voca: data });
     };
-    const onHandleSubmit = (event) => {
+    const onHandleSubmit = async (event) => {
         event.preventDefault();
         // dispatch(
         //     CoursesActions.Add_Course_Request(
@@ -75,6 +96,13 @@ const CreateTopic = (props) => {
         //         t
         //     )
         // );
+        try {
+            const res = await listApi._postData("topics/createAdmin", array);
+            console.log(res);
+            topicsActions.Get_Topics_Request(setIsLoading, enqueueSnackbar);
+        } catch (err) {
+            console.log(err.response.message);
+        }
     };
     const renderCard = (data) => {
         let xhtml = null;
@@ -114,13 +142,46 @@ const CreateTopic = (props) => {
                             <Grid item xs={12} lg={6}>
                                 <Box m={3}>
                                     <TextField
-                                        name="mean"
-                                        value={item.mean}
+                                        name="vocabulary_meaning"
+                                        value={item.vocabulary_meaning}
                                         required
                                         style={{ margin: "1%" }}
                                         fullWidth
                                         id="standard-textarea"
                                         label="Nghia cua tu"
+                                        multiline
+                                        margin="normal"
+                                        onChange={(e) => onChange(e, index)}
+                                    />
+                                </Box>
+                            </Grid>
+                            <Grid item xs={12} lg={6}>
+                                <Box m={3}>
+                                    <TextField
+                                        value={item.kanji_text}
+                                        name="kanji_text"
+                                        required
+                                        style={{ margin: "1%" }}
+                                        fullWidth
+                                        id="standard-textarea"
+                                        label="chu kanji"
+                                        multiline
+                                        margin="normal"
+                                        onChange={(e) => onChange(e, index)}
+                                        // onKeyDown={e => this.props.onPress(e, index)}
+                                    />
+                                </Box>
+                            </Grid>
+                            <Grid item xs={12} lg={6}>
+                                <Box m={3}>
+                                    <TextField
+                                        name="kanji_meaning"
+                                        value={item.kanji_meaning}
+                                        required
+                                        style={{ margin: "1%" }}
+                                        fullWidth
+                                        id="standard-textarea"
+                                        label="Nghia kanji"
                                         multiline
                                         margin="normal"
                                         onChange={(e) => onChange(e, index)}
@@ -152,7 +213,7 @@ const CreateTopic = (props) => {
                         />
                     </Box>
                     <Box m={8}>
-                        {renderCard(array.content)}
+                        {renderCard(array.voca)}
                         <Button
                             fullWidth
                             variant="contained"

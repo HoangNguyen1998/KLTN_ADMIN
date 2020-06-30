@@ -20,167 +20,157 @@ import {
 import { Delete as DeleteIcon } from "@material-ui/icons";
 
 import * as topicsActions from "actions/Topics";
+import * as listApi from "helpers/ListApi";
+import * as challengesActions from "actions/Challenges";
+
 
 const CreateChallenges = (props) => {
-    const { history, enqueueSnackbar } = props;
+    // DEFINE
+    const { history, enqueueSnackbar, _closeModal, setIsLoading } = props;
     const { i18n, t } = useTranslation("translation");
-    const circularRedux = useSelector((state) => state.Loading.showCircular);
-    const [array, setArray] = useState({
-        title: "",
-        content: [
-            { text: "", mean: "" },
-            { text: "", mean: "" },
-        ],
-    });
-    const AddCourseValue = useSelector((state) => {
-        return state.Courses.course;
-    });
     const dispatch = useDispatch();
-    const onAddNewCard = () => {
-        const item = { text: "", mean: "" };
-        const data = [...array.content];
-        data.push(item);
-        setArray({ ...array, content: data });
-    };
-    const handleChange = (event) => {
-        var value = event.target.value;
-        setArray({ ...array, title: value });
-    };
-    const onDeleteCard = (index) => {
-        const data = [...array.content];
-        data.splice(index, 1);
-        setArray({ ...array, content: data });
-    };
-    const onChange = (event, index) => {
-        var target = event.target;
-        var name = target.name;
-        var value = target.value;
 
-        const data = [...array.content];
-        if (name === "text") {
-            data[index].text = value;
-        }
-        if (name === "mean") {
-            data[index].mean = value;
-        }
-        setArray({ ...array, content: data });
-    };
-    const onHandleSubmit = (event) => {
-        event.preventDefault();
-        // dispatch(
-        //     CoursesActions.Add_Course_Request(
-        //         array,
-        //         history,
-        //         enqueueSnackbar,
-        //         t
-        //     )
-        // );
-    };
-    const renderCard = (data) => {
-        let xhtml = null;
-        xhtml = data.map((item, index) => {
-            return (
-                <Card key={index} style={{ marginBottom: "4%" }}>
-                    <CardHeader
-                        title={index + 1}
-                        action={
-                            <Tooltip title={t("DeleteCard")}>
-                                <IconButton onClick={() => onDeleteCard(index)}>
-                                    <DeleteIcon style={{ fontSize: 25 }} />
-                                </IconButton>
-                            </Tooltip>
-                        }
-                    />
-                    <Divider />
-                    <CardContent>
-                        <Grid container spacing={5} style={{ padding: 0 }}>
-                            <Grid item xs={12} lg={6}>
-                                <Box m={3}>
-                                    <TextField
-                                        value={item.text}
-                                        name="text"
-                                        required
-                                        style={{ margin: "1%" }}
-                                        fullWidth
-                                        id="standard-textarea"
-                                        label="Tu moi"
-                                        multiline
-                                        margin="normal"
-                                        onChange={(e) => onChange(e, index)}
-                                        // onKeyDown={e => this.props.onPress(e, index)}
-                                    />
-                                </Box>
-                            </Grid>
-                            <Grid item xs={12} lg={6}>
-                                <Box m={3}>
-                                    <TextField
-                                        name="mean"
-                                        value={item.mean}
-                                        required
-                                        style={{ margin: "1%" }}
-                                        fullWidth
-                                        id="standard-textarea"
-                                        label="Nghia cua tu"
-                                        multiline
-                                        margin="normal"
-                                        onChange={(e) => onChange(e, index)}
-                                    />
-                                </Box>
-                            </Grid>
-                        </Grid>
-                    </CardContent>
-                </Card>
+    // STATE
+    const [question, setQuestion] = useState("");
+    const [choice_1, setChoice_1] = useState("");
+    const [choice_2, setChoice_2] = useState("");
+    const [answer, setAnswer] = useState("");
+    const [explan, setExplan] = useState("");
+    const [level, setLevel] = useState("");
+    const [index, setIndex] = useState("");
+    // USEEFFECT
+
+    // FUNC
+    const _createChallenge = async () => {
+        console.log("huhu");
+        try {
+            console.log("khong vao day ak");
+            const res = await listApi._postData("challenges", {
+                question: question,
+                choice_1: choice_1,
+                choice_2: choice_2,
+                answer: parseInt(answer),
+                explanation: explan,
+                level: parseInt(level),
+                index: parseInt(index),
+            });
+            dispatch(
+                challengesActions.Get_All_Challenges_Request(
+                    setIsLoading,
+                    enqueueSnackbar
+                )
             );
-        });
-        return xhtml;
+            _closeModal()
+        } catch (err) {
+            console.log(err.response.message);
+        }
     };
+    // RENDER
     return (
-        <React.Fragment>
-            <div className="add-course-container">
-                <form onSubmit={onHandleSubmit}>
-                    <Box ml={8}>
-                        <TextField
-                            required
-                            id="standard-multiline-flexible"
-                            name="CourseName"
-                            label="Ten chu de hoc"
-                            value={array.title}
-                            onChange={handleChange}
-                            rowsMax="4"
-                            className="add-course-container__text-field"
-                            margin="normal"
-                        />
-                    </Box>
-                    <Box m={8}>
-                        {renderCard(array.content)}
-                        <Button
-                            fullWidth
-                            variant="contained"
-                            onClick={onAddNewCard}
-                            disabled={circularRedux}
-                        >
-                            <Grid container spacing={5}>
-                                <Grid item xs={12}>
-                                    Tao mot the moi
-                                </Grid>
-                            </Grid>
-                        </Button>
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            className="add-course-container__button"
-                            type="submit"
-                        >
-                            {circularRedux ? (
-                                <CircularProgress color="#ffffff" size={25} />
-                            ) : (
-                                "Tao Chu de hoc"
-                            )}
-                        </Button>
-                    </Box>
-                </form>
+        <div style={{ marginTop: "2rem" }}>
+            <div>
+                <TextField
+                    style={{ marginBottom: "2rem" }}
+                    value={index}
+                    onChange={(e) => setIndex(e.target.value)}
+                    label="Câu số: "
+                    variant="outlined"
+                    InputLabelProps={{
+                        style: { fontSize: "1.6rem" },
+                    }}
+                    fullWidth
+                    multiline
+                />
             </div>
-        </React.Fragment>
+            <div>
+                <TextField
+                    style={{ marginBottom: "2rem" }}
+                    value={question}
+                    onChange={(e) => setQuestion(e.target.value)}
+                    label="Câu hỏi"
+                    variant="outlined"
+                    InputLabelProps={{
+                        style: { fontSize: "1.6rem" },
+                    }}
+                    fullWidth
+                    multiline
+                />
+            </div>
+            <div>
+                <TextField
+                    style={{ marginBottom: "2rem" }}
+                    value={choice_1}
+                    onChange={(e) => setChoice_1(e.target.value)}
+                    label="Lựa chọn 1"
+                    InputLabelProps={{
+                        style: { fontSize: "1.6rem" },
+                    }}
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                />
+            </div>
+            <div>
+                <TextField
+                    style={{ marginBottom: "2rem" }}
+                    value={choice_2}
+                    onChange={(e) => setChoice_2(e.target.value)}
+                    label="Lựa chọn 2"
+                    InputLabelProps={{
+                        style: { fontSize: "1.6rem" },
+                    }}
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                />
+            </div>
+            <div>
+                <TextField
+                    style={{ marginBottom: "2rem" }}
+                    value={answer}
+                    onChange={(e) => setAnswer(e.target.value)}
+                    label="Lựa chọn đúng"
+                    InputLabelProps={{
+                        style: { fontSize: "1.6rem" },
+                    }}
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                />
+            </div>
+            <div>
+                <TextField
+                    style={{ marginBottom: "2rem" }}
+                    value={level}
+                    onChange={(e) => setLevel(e.target.value)}
+                    label="Cấp độ"
+                    InputLabelProps={{
+                        style: { fontSize: "1.6rem" },
+                    }}
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                />
+            </div>
+            <div>
+                <TextField
+                    style={{ marginBottom: "2rem" }}
+                    value={explan}
+                    onChange={(e) => setExplan(e.target.value)}
+                    label="Giải thích"
+                    InputLabelProps={{
+                        style: { fontSize: "1.6rem" },
+                    }}
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                />
+            </div>
+            <div>
+                <Button onClick={() => _closeModal()}>Huỷ</Button>
+                <Button onClick={() => _createChallenge()}>Tạo khoá học</Button>
+            </div>
+        </div>
     );
 };
 

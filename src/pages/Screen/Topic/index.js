@@ -37,7 +37,7 @@ const Topic = (props) => {
     }, []);
     // -----    FUNC    -----
     const _showModalCreate = () => {
-        modalRef.current._openModal(<CreateTopicModal />, 1000);
+        modalRef.current._openModal(<CreateTopicModal setIsLoading={setIsLoading} />, 1000);
     };
     const _showModalDetail = () => {
         console.log("hello");
@@ -166,7 +166,13 @@ const Topic = (props) => {
                         onClick={() => _showModalDetail(item._id, item.status)}
                         style={{ color: "green" }}
                     >
-                        Chinh sua khoa hoc
+                        Chỉnh sửa chủ đề học
+                    </a>
+                    <a
+                        onClick={() => _showModalDetail(item._id, item.status)}
+                        style={{ color: "red" }}
+                    >
+                        Xoá chủ đề học
                     </a>
                 </Space>
             ),

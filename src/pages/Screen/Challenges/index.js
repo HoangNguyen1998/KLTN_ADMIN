@@ -12,8 +12,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import "./styles.scss";
 import * as challengesActions from "actions/Challenges";
 import MyModal from "pages/Components/MyModal";
-import ChallengesDetail from "./Components/ChallengesDetail";
+import UpdateChallenges from "./Components/UpdateChallenges";
 import CreateChallenges from "./Components/CreateChallenges";
+import DeleteChallenges from "./Components/DeleteChallenges";
 
 const Challenges = (props) => {
     // -----    DEFINE  -----
@@ -44,9 +45,11 @@ const Challenges = (props) => {
     const _showModalDetail = (item) => {
         console.log("Hello");
         modalRef.current._openModal(
-            <ChallengesDetail
+            <UpdateChallenges
                 item={item}
+                setIsLoading={setIsLoading}
                 _closeModal={modalRef.current._closeModal}
+                enqueueSnackbar={enqueueSnackbar}
             />,
             1000
         );
@@ -54,7 +57,21 @@ const Challenges = (props) => {
     const _showModalCreate = () => {
         console.log("Hello");
         modalRef.current._openModal(
-            <CreateChallenges _closeModal={modalRef.current._closeModal} />,
+            <CreateChallenges
+                setIsLoading={setIsLoading}
+                _closeModal={modalRef.current._closeModal}
+            />,
+            1000
+        );
+    };
+    const _showModalDelete = (item) => {
+        console.log("Hello");
+        modalRef.current._openModal(
+            <DeleteChallenges
+                item={item}
+                setIsLoading={setIsLoading}
+                _closeModal={modalRef.current._closeModal}
+            />,
             1000
         );
     };
@@ -184,6 +201,12 @@ const Challenges = (props) => {
                     >
                         Chỉnh sửa thử thách
                     </a>
+                    <a
+                        onClick={() => _showModalDelete(item)}
+                        style={{ color: "red" }}
+                    >
+                        Xoá thử thách này
+                    </a>
                 </Space>
             ),
         },
@@ -204,7 +227,7 @@ const Challenges = (props) => {
                         _showModalCreate();
                     }}
                 >
-                    Tao thử thách mới
+                    Tạo thử thách mới
                 </Button>
             </div>
             <Table

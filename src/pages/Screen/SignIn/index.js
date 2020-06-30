@@ -125,19 +125,7 @@ const SignIn = (props) => {
                         ),
                     }}
                 />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            name="remember"
-                            value={remember}
-                            checked={remember}
-                            className={classes.remember}
-                            onChange={handleChange}
-                            color="primary"
-                        />
-                    }
-                    label={t("Remember")}
-                />
+
                 <Button
                     type="submit"
                     fullWidth
